@@ -12,6 +12,14 @@ LABEL name="tripleo/centos-binary-nova-compute-triliodata" \
 ##Install datamover packages
 RUN dnf clean all
 ADD trilio.repo delorean-component-tripleo.repo /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-NFV-OpenvSwitch.repo
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-NFV-OpenvSwitch.repo
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-OpenStack-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-OpenStack-*
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-OpsTools.repo
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-OpsTools.repo
 RUN dnf install -y python3-tripleo-repos
 RUN tripleo-repos -b train current && tripleo-repos -b train current ceph
 
